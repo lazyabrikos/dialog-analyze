@@ -1,13 +1,13 @@
-package ru.novikov.vladimir.controller;
+package ru.dialog.analyzer.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
-import ru.novikov.vladimir.model.Message;
-import ru.novikov.vladimir.model.Response;
-import ru.novikov.vladimir.service.DialogAnalyzerService;
+import ru.dialog.analyzer.model.Message;
+import ru.dialog.analyzer.model.Response;
+import ru.dialog.analyzer.service.DialogAnalyzerService;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package ru.novikov.vladimir.config;
+package ru.dialog.analyzer.config;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,6 +11,10 @@ public class ChatGPTConfig {
 
     @Value("${openai.api.key}")
     private String openaiApiKey;
+
+    @Value("${openai.api.url}")
+    private String apiUrl;
+
 
     @Bean
     @Qualifier("chatGPTRestTemplate")

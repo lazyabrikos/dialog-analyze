@@ -1,4 +1,4 @@
-package ru.novikov.vladimir.model;
+package ru.dialog.analyzer.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;

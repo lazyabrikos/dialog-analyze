@@ -1,16 +1,15 @@
-package ru.novikov.vladimir.errors;
+package ru.dialog.analyzer.errors;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
-import ru.novikov.vladimir.exceptions.EmptyAnswerException;
-import ru.novikov.vladimir.exceptions.HttpException;
-import ru.novikov.vladimir.exceptions.NotAvailableException;
+import ru.dialog.analyzer.exceptions.EmptyAnswerException;
+import ru.dialog.analyzer.exceptions.HttpException;
+import ru.dialog.analyzer.exceptions.NotAvailableException;
 
 @Slf4j
 @RestControllerAdvice

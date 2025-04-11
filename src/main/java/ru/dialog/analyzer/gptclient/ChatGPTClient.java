@@ -1,6 +1,5 @@
-package ru.novikov.vladimir.gptclient;
+package ru.dialog.analyzer.gptclient;
 
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -11,10 +10,10 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
-import ru.novikov.vladimir.exceptions.HttpException;
-import ru.novikov.vladimir.exceptions.NotAvailableException;
-import ru.novikov.vladimir.model.ChatGPTRequest;
-import ru.novikov.vladimir.model.ChatGPTResponse;
+import ru.dialog.analyzer.exceptions.HttpException;
+import ru.dialog.analyzer.exceptions.NotAvailableException;
+import ru.dialog.analyzer.model.ChatGPTRequest;
+import ru.dialog.analyzer.model.ChatGPTResponse;
 
 import java.util.Optional;
 

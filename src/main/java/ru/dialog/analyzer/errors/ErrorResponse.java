@@ -1,4 +1,4 @@
-package ru.novikov.vladimir.errors;
+package ru.dialog.analyzer.errors;
 
 import lombok.Getter;
 import lombok.Setter;

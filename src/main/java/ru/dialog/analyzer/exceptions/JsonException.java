@@ -1,4 +1,4 @@
-package ru.novikov.vladimir.exceptions;
+package ru.dialog.analyzer.exceptions;
 
 public class JsonException extends RuntimeException {
   public JsonException(String message) {

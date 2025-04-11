@@ -1,4 +1,4 @@
-package ru.novikov.vladimir.config;
+package ru.dialog.analyzer.config;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
