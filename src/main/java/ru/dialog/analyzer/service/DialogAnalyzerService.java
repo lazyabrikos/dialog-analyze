@@ -63,8 +63,8 @@ public class DialogAnalyzerService {
                     try {
                         return future.get();
                     } catch (InterruptedException | ExecutionException e) {
-                        log.error("Ошибка при получении ответа от future", e);
-                        throw new RuntimeException("Ошибка при получении ответа от future", e);
+                        log.error("Error while getting response from future", e);
+                        throw new RuntimeException("Error while getting response from future", e);
                     }
                 })
                 .toList();
