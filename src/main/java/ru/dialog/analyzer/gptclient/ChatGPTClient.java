@@ -29,7 +29,7 @@ public class ChatGPTClient {
     @Value("${openai.api.url}")
     private String apiUrl;
 
-    @Value("${openai.model}")
+    @Value("${openai.model:gpt-4o-mini}")
     private String model;
 
     public Optional<String> chat(String prompt) {
