@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import ru.dialog.analyzer.exceptions.EmptyAnswerException;
 import ru.dialog.analyzer.exceptions.JsonException;
@@ -12,9 +13,10 @@ import ru.dialog.analyzer.gptclient.ChatGPTClient;
 import ru.dialog.analyzer.model.Message;
 import ru.dialog.analyzer.model.Response;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 @Service
 @RequiredArgsConstructor
@@ -36,20 +38,37 @@ public class DialogAnalyzerService {
 
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
-    public List<Response> analyze(List<List<Message>> messages) {
-        List<Response> responses = new ArrayList<>();
-        for (List<Message> dialog : messages) {
-            StringBuilder dialogRequest = new StringBuilder();
-            for (Message message : dialog) {
-                dialogRequest.append(message.getRole()).append(": ").append(message.getContent()).append(" ");
-            }
-
-            String prompt = String.format(promptTemplate, dialogRequest.toString());
-            String responseString = chatGPTClient.chat(prompt).orElseGet(() -> retryRequest(prompt));
-            Response response = parseStringToResponse(responseString);
-            responses.add(response);
+    @Async
+    public CompletableFuture<Response> analyzeDialog(List<Message> dialog) {
+        StringBuilder dialogRequest = new StringBuilder();
+        for (Message message : dialog) {
+            dialogRequest.append(message.getRole()).append(": ").append(message.getContent()).append(" ");
         }
-        return responses;
+
+        String prompt = String.format(promptTemplate, dialogRequest.toString());
+        String responseString = chatGPTClient.chat(prompt).orElseGet(() -> retryRequest(prompt));
+        Response response = parseStringToResponse(responseString);
+
+        return CompletableFuture.completedFuture(response);
+    }
+
+    public List<Response> analyze(List<List<Message>> messages) {
+        List<CompletableFuture<Response>> futures = messages.stream()
+                .map(this::analyzeDialog)
+                .toList();
+        CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
+
+        return futures.stream()
+                .map(future -> {
+                    try {
+                        return future.get();
+                    } catch (InterruptedException | ExecutionException e) {
+                        log.error("Ошибка при получении ответа от future", e);
+                        throw new RuntimeException("Ошибка при получении ответа от future", e);
+                    }
+                })
+                .toList();
+
     }
 
     private Response parseStringToResponse(String responseString) {
